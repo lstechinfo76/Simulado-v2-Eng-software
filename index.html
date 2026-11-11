@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engenharia de Software: Simulado 2 | LSTECHINFO TI</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body data-theme="dark">
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <div id="creator-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content">
+            <button class="modal-close" id="close-creator-modal" aria-label="Fechar">&times;</button>
+            <div class="creator-profile">
+                <div class="creator-avatar">👨‍💻</div>
+                <h3>Leandro Albuquerque</h3>
+                <p class="creator-brand">LSTECHINFO TI</p>
+                <p class="creator-bio">Desenvolvedor Full-Stack e Profissional de Suporte de TI.<br>Criador do motor de simulados V2 Pro.</p>
+                <div class="creator-links">
+                    <a href="https://github.com/lstechinfo76" target="_blank" rel="noopener noreferrer" class="primary-btn compact-btn btn-center">Ver GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <canvas id="network-bg" class="particles-bg" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div class="brand" id="home-link" title="Voltar ao início" tabindex="0" role="button">
+                <div class="brand-mark">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" 
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-4h-4V9z"/>
+                        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3v4h4v9z"/>
+                        <circle cx="9" cy="9" r="1" fill="currentColor"/>
+                        <circle cx="15" cy="15" r="1" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="brand-copy">
+                    <strong>LSTECHINFO TI</strong>
+                    <span>Engenharia de Software • Simulado 2</span>
+                </div>
+            </div>
+
+            <nav class="header-nav" aria-label="Navegação principal">
+                <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Abrir menu" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+
+                <div id="header-actions" class="header-actions">
+                    <button id="sound-toggle" class="action-item" aria-label="Alternar som" title="Som">
+                        <span class="icon">🔊</span>
+                        <span class="label mobile-only-text">Áudio do Sistema</span>
+                    </button>
+                    <button id="effects-toggle" class="action-item" aria-label="Alternar efeitos visuais" title="Efeitos Visuais">
+                        <span class="icon">⚡</span>
+                        <span class="label mobile-only-text">Efeitos Visuais</span>
+                    </button>
+                    <button id="theme-toggle" class="action-item" aria-label="Alternar tema" title="Tema">
+                        <span class="icon">☀️</span>
+                        <span class="label mobile-only-text">Alternar Tema</span>
+                    </button>
+                    <a class="action-item" href="https://wa.me/5568000000000?text=Ol%C3%A1%2C%20encontrei%20um%20bug%20no%20sistema!" target="_blank" rel="noopener noreferrer" aria-label="Relatar Bug" title="Relatar Bug">
+                        <span class="icon">🐞</span>
+                        <span class="label mobile-only-text">Relatar Bug</span>
+                    </a>
+                    <button id="about-creator-btn" class="action-item" aria-label="Sobre o Criador" title="Sobre o Criador">
+                        <span class="icon">👨‍💻</span>
+                        <span class="label mobile-only-text">Sobre o Criador</span>
+                    </button>
+                    <a class="action-item" href="https://github.com/lstechinfo76" target="_blank" rel="noopener noreferrer"
+                        aria-label="Acessar GitHub" title="Repositório">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.44 5.44 0 0 0 3.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </span>
+                        <span class="label mobile-only-text">Ver no GitHub</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-shell">
+        <section id="start-screen" class="screen active" aria-labelledby="hero-title">
+            <div id="historico-container" class="history-card hidden" aria-live="polite">
+                <div class="history-content">
+                    <span class="history-label">Última conexão</span>
+                    <strong>Desempenho: <span id="historico-acertos" class="highlight-score">0</span> de 30 acertos</strong>
+                </div>
+                <button id="view-past-review-btn" class="ghost-btn compact-btn">Ver logs (Gabarito)</button>
+            </div>
+
+            <div class="hero-card">
+                <div class="glow-orb orb-1"></div>
+                <div class="glow-orb orb-2"></div>
+
+                <div class="hero-content">
+                    <span class="eyebrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Engine • V2 Pro
+                    </span>
+                    <h1 id="hero-title" class="glitch-text" data-text="Engenharia de Software">Engenharia de<br>Software</h1>
+                    <p>Simulado 2 de Engenharia de Software. Valide seus conhecimentos em testes, metodologias ágeis, CI/CD e qualidade. Compile e valide as alternativas.</p>
+
+                    <div class="hero-actions">
+                        <button id="start-btn" class="primary-btn start-main-btn" aria-label="Iniciar simulado">Inicializar Compilação</button>
+                        <div class="pro-mode-hint" aria-hidden="true">
+                            ⌨️ <strong>Terminal Mode:</strong> Use as teclas <span>A</span> <span>B</span>
+                            <span>C</span> <span>D</span> <span>E</span> para responder e <span>Enter</span> para avançar.
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="hero-panel" aria-label="Estatísticas do simulado">
+                    <div class="metric">
+                        <strong>30</strong>
+                        <span>nós (questões)</span>
+                    </div>
+                    <div class="metric">
+                        <strong>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </strong>
+                        <span>tempo livre</span>
+                    </div>
+                    <div class="metric">
+                        <strong>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 12h4l3-9 5 18 3-9h5"></path>
+                            </svg>
+                        </strong>
+                        <span>gabarito comentado</span>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="quiz-screen" class="screen hidden" aria-labelledby="question-tracker">
+            <article class="quiz-card">
+                <div id="access-stamp" class="access-stamp hidden" aria-hidden="true">ACESSO CONCEDIDO</div>
+
+                <header class="quiz-top">
+                    <div class="quiz-title">
+                        <span id="question-tracker" aria-live="polite">Questão 1 de 30</span>
+                        <strong>Simulado 2 - Engenharia de Software</strong>
+                    </div>
+                    <div class="timer-badge" id="quiz-timer" aria-label="Tempo decorrido">00:00</div>
+                </header>
+
+                <div class="progress-track" aria-hidden="true">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+
+                <section class="question-area">
+                    <h2 id="question-text" aria-live="assertive">Carregando ping...</h2>
+                    <div id="options-container" class="options-list" role="radiogroup" aria-label="Opções de resposta"></div>
+
+                    <div id="explanation-container" class="explanation-panel hidden" aria-live="polite">
+                        <span>Output Técnico</span>
+                        <p id="explanation-text"></p>
+                    </div>
+                </section>
+
+                <footer class="quiz-actions" id="quiz-actions">
+                    <button id="skip-btn" class="ghost-btn">Pular (S)</button>
+                    <button id="next-btn" class="primary-btn hidden-btn">Próxima ➔ (Enter)</button>
+                </footer>
+            </article>
+        </section>
+
+        <section id="result-screen" class="screen hidden" aria-labelledby="result-title">
+            <article class="result-card">
+                <header class="result-hero" id="print-area">
+                    <span class="eyebrow-result">📈 Relatório de Compilação</span>
+                    <h2 id="result-title">Status da Revisão</h2>
+                    <div class="score-circle" id="score-circle-ui">
+                        <strong id="score-text">0</strong>
+                        <span>/ <b id="total-text">30</b></span>
+                    </div>
+                    <p id="feedback-text" aria-live="polite">Analisando pacotes...</p>
+                    <div class="result-stats">
+                        <div class="stat-box">
+                            <span class="stat-label">Uptime (Tempo)</span>
+                            <strong id="time-total-text">00:00</strong>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Latência Média</span>
+                            <strong id="time-avg-text">0s</strong>
+                        </div>
+                    </div>
+                </header>
+                <section class="result-actions">
+                    <button id="share-btn" class="primary-btn share-btn" aria-label="Exportar para WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        Exportar WhatsApp
+                    </button>
+                    <button id="show-review-btn" class="ghost-btn">Ver logs detalhados</button>
+                    <button id="restart-btn" class="ghost-btn">Reiniciar Sistema</button>
+                </section>
+                <section id="review-container" class="review-section hidden">
+                    <div class="review-heading">
+                        <h3>Logs do Sistema (Gabarito)</h3>
+                        <p>Trilha de auditoria das respostas enviadas.</p>
+                    </div>
+                    <div id="review-content" class="review-list"></div>
+                </section>
+            </article>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Leandro | LSTECHINFO TI.</p>
+        <span>Engine V2 Pro • Simulado Edition</span>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
